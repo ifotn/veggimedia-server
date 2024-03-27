@@ -24,5 +24,26 @@ router.post('/', async (req, res) => {
     }
 });
 
+// DELETE: /media/abc123 => remove selected media doc from _id param
+router.delete('/:_id', async (req, res) => {
+    try {
+        await Media.findByIdAndDelete(req.params._id);
+        return res.status(202).json({}); // 202: No Content
+    }
+    catch (err) {
+        return res.status(404).json(err);  // 404: Not Found
+    }
+});
+
+// PUT: /media/abc123 => update selected doc 
+router.put('/:_id', async(req, res) => {
+    try {
+        const media = await Media.findByIdAndUpdate(req.params._id, req.body);
+        return res.status(204).json(media); // 204: Resource Updated
+    }
+    catch (err) {
+        return res.status(404).json(err);  // 404: Not Found
+    }
+});
 
 module.exports = router;
