@@ -27,5 +27,9 @@ app.use(cors({
 const mediaController = require('./controllers/media');
 app.use('/v1/api/media', mediaController);
 
+// route base URL to angular runtime inside public
+app.use(express.static(__dirname + '/public'));
+app.get('*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
+
 app.listen(3000);
 module.exports = app;
